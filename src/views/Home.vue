@@ -42,14 +42,23 @@ export default {
     const search = ref("");
     const movies = ref([]);
 
-    const SearchMovies = () => {
+    // const SearchMovies = () => {
+    //   if(search.value != ""){
+    //     fetch(`http://omdbapi.com/?apikey=${env.apikey}&s=${search.value}`)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       movies.value = data.Search;
+    //       search.value = "";
+    //     });
+    //   }
+    // }
+
+    async function SearchMovies(){
       if(search.value != ""){
-        fetch(`http://omdbapi.com/?apikey=${env.apikey}&s=${search.value}`)
-        .then(response => response.json())
-        .then(data => {
-          movies.value = data.Search;
-          search.value = "";
-        });
+        const response = await fetch(`http://omdbapi.com/?apikey=${env.apikey}&s=${search.value}`);
+        const data = await response.json();
+        movies.value = data.Search;
+        search.value = "";
       }
     }
 
